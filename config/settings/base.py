@@ -78,10 +78,12 @@ THIRD_PARTY_APPS = [
     "allauth.mfa",
     "allauth.socialaccount",
     "django_celery_beat",
+    "tailwind",
 ]
 
 LOCAL_APPS = [
     "project.users",
+    "project.theme",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -315,3 +317,4 @@ SOCIALACCOUNT_FORMS = {"signup": "project.users.forms.UserSocialSignupForm"}
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+TAILWIND_APP_NAME = 'project.theme'
