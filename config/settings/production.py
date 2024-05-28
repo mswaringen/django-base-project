@@ -12,6 +12,8 @@ from .base import DATABASES
 from .base import INSTALLED_APPS
 from .base import env
 
+from urllib.parse import urlparse
+
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
@@ -70,11 +72,11 @@ SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
 # https://django-storages.readthedocs.io/en/latest/#installation
 INSTALLED_APPS += ["storages"]
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
-AWS_ACCESS_KEY_ID = env("DJANGO_AWS_ACCESS_KEY_ID")
+AWS_ACCESS_KEY_ID = env("DJANGO_AWS_ACCESS_KEY_ID", default=None) or env("AWS_ACCESS_KEY_ID", default=None)
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
-AWS_SECRET_ACCESS_KEY = env("DJANGO_AWS_SECRET_ACCESS_KEY")
+AWS_SECRET_ACCESS_KEY = env("DJANGO_AWS_SECRET_ACCESS_KEY", default=None) or env("AWS_SECRET_ACCESS_KEY", default=None)
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
-AWS_STORAGE_BUCKET_NAME = env("DJANGO_AWS_STORAGE_BUCKET_NAME")
+AWS_STORAGE_BUCKET_NAME = env("DJANGO_AWS_STORAGE_BUCKET_NAME", default=None) or env("BUCKET_NAME", default=None)
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_QUERYSTRING_AUTH = False
 # DO NOT change these unless you know what you're doing.
@@ -89,10 +91,19 @@ AWS_S3_MAX_MEMORY_SIZE = env.int(
     default=100_000_000,  # 100MB
 )
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
-AWS_S3_REGION_NAME = env("DJANGO_AWS_S3_REGION_NAME", default=None)
+AWS_S3_REGION_NAME = env("DJANGO_AWS_S3_REGION_NAME", default=None) or env("AWS_REGION", default=None)
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#cloudfront
+AWS_S3_ENDPOINT_URL = env("AWS_ENDPOINT_URL_S3", default=None)
 AWS_S3_CUSTOM_DOMAIN = env("DJANGO_AWS_S3_CUSTOM_DOMAIN", default=None)
-aws_s3_domain = AWS_S3_CUSTOM_DOMAIN or f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
+# Parse the endpoint URL to get the domain without protocol
+if AWS_S3_ENDPOINT_URL:
+    parsed_url = urlparse(AWS_S3_ENDPOINT_URL)
+    endpoint_domain = parsed_url.netloc
+else:
+    endpoint_domain = None
+
+aws_s3_domain = AWS_S3_CUSTOM_DOMAIN or endpoint_domain or f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 # STATIC & MEDIA
 # ------------------------
 STORAGES = {

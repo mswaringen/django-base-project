@@ -20,3 +20,4 @@ django-redis==5.4.0  # https://github.com/jazzband/django-redis
 # User Added
 # -------------------------------------------------------------------------------
 django-tailwind==3.8.0 # https://github.com/timonweb/django-tailwind/
+django-celery-results==2.5.1 # https://github.com/celery/django-celery-results
