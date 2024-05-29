@@ -59,7 +59,7 @@ cat .envs/.production/.django | fly secrets import
 ```
 fly deploy
 ```
-### Remote consol access
+### Remote console access
 ```
 fly ssh console
 ```
