@@ -43,9 +43,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   libpq-dev \
   # Translations dependencies
   gettext \
-  # NEW install Node.js
-  # && apt-get install nodejs -y \
-  # && apt-get install npm -y \
   # cleaning up unused files
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*

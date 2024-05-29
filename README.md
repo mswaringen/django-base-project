@@ -6,9 +6,14 @@ License: MIT
 
 ## Includes
 
-- Cookiecutter Django
-- Tailwind CSS (via django-tailwind) + Preline CSS
-- Configured to deploy on Fly.io (PG, Redis, Celery workers, Tigris S3 storage)
+- [Cookiecutter Django](https://github.com/cookiecutter/cookiecutter-django)
+- [Tailwind CSS](https://tailwindcss.com/) (via [django-tailwind)](https://github.com/timonweb/django-tailwind)) + [Preline CSS](https://preline.co/)
+- Configured to deploy on [Fly.io](https://fly.io/) (Postgres, Redis, Celery workers, Tigris S3 storage)
+
+### Modifications
+- Updated local Django Dockerfile to install Nodejs and NPM (needed for Tailwind CSS + Preline CSS)
+- Added management command to copy updated preline.js file to project static dir
+- Modified production settings config to deploy to Fly.io
 
 ## Run locally in Docker
 
