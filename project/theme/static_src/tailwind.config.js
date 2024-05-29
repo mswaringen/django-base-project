@@ -43,6 +43,10 @@ module.exports = {
 
         'node_modules/preline/dist/*.js',
     ],
+    
+    // enable dark mode via class strategy
+    darkMode: 'class',
+
     theme: {
         extend: {},
     },
